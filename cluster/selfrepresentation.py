@@ -16,6 +16,7 @@ from sklearn.linear_model import orthogonal_mp
 from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import normalize
 from sklearn.utils import check_random_state, check_array, check_symmetric
+from sklearn.cluster import DBSCAN
 
 
 class SelfRepresentation(BaseEstimator, ClusterMixin):
@@ -68,7 +69,8 @@ class SelfRepresentation(BaseEstimator, ClusterMixin):
         self.timer_self_representation_ = time.time() - time_base
 
         self._representation_to_affinity()
-        self._spectral_clustering()
+        # self._spectral_clustering()
+        self.dbscan()
         self.timer_time_ = time.time() - time_base
 
         return self
@@ -98,6 +100,11 @@ class SelfRepresentation(BaseEstimator, ClusterMixin):
             neighbors_graph = kneighbors_graph(normalized_representation_matrix_, 3,
                                                mode='connectivity', include_self=False)
             self.affinity_matrix_ = 0.5 * (neighbors_graph + neighbors_graph.T)
+
+    def dbscan(self):
+        affinity_matrix_ = check_symmetric(self.affinity_matrix_)
+        dbscan = DBSCAN(eps=0.2, min_samples=5, metric="euclidean")
+        self.labels_ = dbscan.fit_predict(affinity_matrix_)
 
     def _spectral_clustering(self):
         affinity_matrix_ = check_symmetric(self.affinity_matrix_)
