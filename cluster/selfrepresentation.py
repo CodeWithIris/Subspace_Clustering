@@ -103,7 +103,7 @@ class SelfRepresentation(BaseEstimator, ClusterMixin):
 
     def dbscan(self):
         affinity_matrix_ = check_symmetric(self.affinity_matrix_)
-        dbscan = DBSCAN(eps=0.2, min_samples=5, metric="euclidean")
+        dbscan = DBSCAN(eps=0.2, min_samples=10, metric="euclidean")
         self.labels_ = dbscan.fit_predict(affinity_matrix_)
 
     def _spectral_clustering(self):
