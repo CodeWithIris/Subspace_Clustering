@@ -70,7 +70,7 @@ class SelfRepresentation(BaseEstimator, ClusterMixin):
 
         self._representation_to_affinity()
         # self._spectral_clustering()
-        self.dbscan()
+        self._DBSCAN()
         self.timer_time_ = time.time() - time_base
 
         return self
@@ -101,7 +101,7 @@ class SelfRepresentation(BaseEstimator, ClusterMixin):
                                                mode='connectivity', include_self=False)
             self.affinity_matrix_ = 0.5 * (neighbors_graph + neighbors_graph.T)
 
-    def dbscan(self):
+    def _DBSCAN(self):
         affinity_matrix_ = check_symmetric(self.affinity_matrix_)
         dbscan = DBSCAN(eps=0.2, min_samples=10, metric="precomputed")
         self.labels_ = dbscan.fit_predict(affinity_matrix_)
