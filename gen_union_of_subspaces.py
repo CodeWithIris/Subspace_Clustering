@@ -21,7 +21,7 @@ def gen_union_of_subspaces(ambient_dim, subspace_dim, num_subspaces, num_points_
     num_points_per_subspace : int
         Number of data points from each of the subspaces
     noise_level : float
-        Amount of Gaussian noise on data
+        Amount of Gaussian Noise on data
 		
     Returns
     -------

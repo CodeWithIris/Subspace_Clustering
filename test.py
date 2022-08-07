@@ -14,9 +14,6 @@ from sklearn import cluster
 import matplotlib.pyplot as plt
 
 data = loadmat('./data/ORL_32x32.mat')
-# print(data)
-# print("____")
-# print(data.keys()) # python3下返回的不是list，而是dict_keys(['__header__', '__version__', '__globals__', 'X', 'y'])
 img = data['fea']
 raw_label = data['gnd']
 label = list()

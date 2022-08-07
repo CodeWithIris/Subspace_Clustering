@@ -103,7 +103,8 @@ class SelfRepresentation(BaseEstimator, ClusterMixin):
 
     def _DBSCAN(self):
         affinity_matrix_ = check_symmetric(self.affinity_matrix_)
-        dbscan = DBSCAN(eps=0.2, min_samples=10, metric="precomputed")
+        dbscan = DBSCAN(eps=0.2, min_samples=10, metric="euclidean")
+        # dbscan = DBSCAN(eps=0.2, min_samples=10, metric="precomputed")
         self.labels_ = dbscan.fit_predict(affinity_matrix_)
 
     def _spectral_clustering(self):
@@ -530,7 +531,7 @@ def least_squares_subspace_clustering(X, gamma=10.0, exclude_self=False):
     X : array-like, shape (n_samples, n_features)
         Input data to be clustered
     gamma : float
-        Parameter on noise regularization term
+        Parameter on Noise regularization term
     exclude_self : boolean, default False
         When False, solves (*) without the constraint c_jj = 0
 		
@@ -578,7 +579,7 @@ class LeastSquaresSubspaceClustering(SelfRepresentation):
     n_init : int, optional, default: 10
         This is the n_init parameter for k-means. 
     gamma : float
-        Parameter on noise regularization term
+        Parameter on Noise regularization term
     exclude_self : boolean, default False
         When False, solves (*) without the constraint c_jj = 0
 	
